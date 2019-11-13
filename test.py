@@ -26,5 +26,6 @@ for i in range(1, 100):
     model=GaussianNB()
     model.fit(data,lab)
     dubao=model.predict(X_test70)
-    print("bAYES: ", accuracy_score(Y_test70,dubao)*100)
+    print("BAYES: ", accuracy_score(Y_test70,dubao)*100)
+    
     
