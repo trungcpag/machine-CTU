@@ -1,24 +1,31 @@
 import pandas as pd
 import numpy as np
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score
-from sklearn import tree
-df=pd.read_csv('audit_risk.csv')
-data = df.iloc[5:11,[0,1,2,3,21]]
-lab = df.iloc[5:11,26]
-print(data)
-print(lab)
-clf = tree.DecisionTreeClassifier(max_depth=3)
-clf = clf.fit(data,lab)
 from sklearn.tree import export_graphviz
-import graphviz 
+from sklearn.externals.six import StringIO  
+from IPython.display import Image  
+import pydotplus
+from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifier
+from sklearn.model_selection import train_test_split # Import train_test_split function
+from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
+from sklearn import tree
+import graphviz
 from graphviz import Source
-dotfile = open("D:/tree.dot", 'w')
-# # dot_data = tree.export_graphviz(clf, out_file=dotfile, feature_names=data.columns,class_names=data,filled=True, rounded=True)
-# # graph = graphviz.Source(dot_data) 
-#  tree.export_graphviz(clf, out_file=dotfile,
-#                          feature_names=data.columns,
-#                          class_names=data,
-#                          filled=True, rounded=True)
+from sklearn.tree import DecisionTreeClassifier
+
+pima = pd.read_csv("H:/test.csv")
+pima.head(8)
+
+feature_cols = ['Sector_score', 'Score_A', 'Score_B', 'TOTAL','Money_Value']
+X = pima[feature_cols] # Features
+y = pima.Risk # Target variable
+print(y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=1)
+clf = DecisionTreeClassifier()
+clf = clf.fit(X_train,y_train)
+y_pred = clf.predict(X_test)
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred)*100)
+
+tree.export_graphviz(clf, out_file="H:/tree.dot",
+                         feature_names=feature_cols,
+                         class_names=['0','1'],
+                         filled=True, rounded=True)
