@@ -11,11 +11,13 @@ data = df.iloc[:, [0,1,2,3,5,6,8,9,12,18,21]]
 lab = df['Risk']
 trial=pd.read_csv('trial.csv')
 data_test = trial.iloc[0:772, [0,1,2,3,4,5,6,7,9,14,16]]
-print(data_test)
+# print(data_test)
 lab_test = trial.iloc[0:772, 17]
 trial['Risk'].head(200)
 sum = 0.0
 workbook = xlwt.Workbook() 
+DATA_SET = data + data_test
+print(DATA_SET)
 sheet = workbook.add_sheet("Sheet Name") 
 for i in range(1, 100):
     X_test70, X_test30, Y_test70, Y_test30 = train_test_split(data_test, lab_test, test_size = 4/10.0, random_state = i*10 )
@@ -36,4 +38,5 @@ for i in range(1, 100):
     sheet.write(i, 1, accuracy_score(Y_test70,data_pred)*100)
     sheet.write(i, 2, accuracy_score(Y_test70,dubaoPeceptron)*100)
     sheet.write(i, 3, accuracy_score(Y_test70,dubao)*100)
-workbook.save("sample2.xls")
+# workbook.save("sample3.xls")
+print("Accuracy Decision Tree ", sum/100)
